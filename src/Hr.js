@@ -10,14 +10,39 @@ const HR = () => {
             .catch(error => console.error('Error fetching queries:', error));
     }, []);
 
+    const getPriorityColor = (priority) => {
+        switch (priority) {
+            case 'High':
+                return 'red';
+            case 'Medium':
+                return 'orange';
+            default:
+                return 'gray';
+        }
+    };
+
+    const filteredQueries = queries.filter(query => query.priority && query.priority !== 'None');
+
     return (
         <div className="department-page">
             <h2>HR Queries</h2>
             <div className="query-container">
-                {queries.map((query, index) => (
+                {filteredQueries.map((query, index) => (
                     <div key={index} className="query-box">
-                        <p><strong>ID:</strong> {query.id}</p>
+                        <div className="query-header">
+                            <p><strong>ID:</strong> {query.id}</p>
+                            {query.priority && (
+                                <span 
+                                    className="priority-bubble" 
+                                    style={{ backgroundColor: getPriorityColor(query.priority) }}
+                                >
+                                    {query.priority}
+                                </span>
+                            )}
+                        </div>
                         <p><strong>Query:</strong> {query.text}</p>
+                        {/* Assuming 'querySolution' is not part of the HR queries */}
+                        {/* <p><strong>Suggestion:</strong> {query.querySolution}</p> */}
                     </div>
                 ))}
             </div>

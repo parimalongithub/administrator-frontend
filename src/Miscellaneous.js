@@ -10,14 +10,36 @@ const Miscellaneous = () => {
             .catch(error => console.error('Error fetching queries:', error));
     }, []);
 
+    // Filter out queries with priority 'None'
+    const filteredQueries = queries.filter(query => query.priority && query.priority !== 'None');
+
+    const getPriorityColor = (priority) => {
+        switch (priority) {
+            case 'High':
+                return 'red';
+            case 'Medium':
+                return 'orange';
+            default:
+                return 'gray'; // Default color for undefined or invalid priorities
+        }
+    };
+
     return (
         <div className="department-page">
             <h2>Miscellaneous Queries</h2>
             <div className="query-container">
-                {queries.map((query, index) => (
+                {filteredQueries.map((query, index) => (
                     <div key={index} className="query-box">
                         <p><strong>ID:</strong> {query.id}</p>
                         <p><strong>Query:</strong> {query.text}</p>
+                        {query.priority && query.priority !== 'None' && (
+                            <span 
+                                className="priority-bubble" 
+                                style={{ backgroundColor: getPriorityColor(query.priority) }}
+                            >
+                                {query.priority}
+                            </span>
+                        )}
                     </div>
                 ))}
             </div>

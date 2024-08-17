@@ -21,26 +21,28 @@ const Technical = () => {
         }
     };
 
+    const filteredQueries = queries.filter(query => query.priority && query.priority !== 'None');
+
     return (
         <div className="department-page">
             <h2>Technical Department Queries</h2>
             <div className="query-container">
-                {queries.map((query, index) => (
+                {filteredQueries.map((query, index) => (
                     <div key={index} className="query-box">
                         <div className="query-header">
                             <p><strong>ID:</strong> {query.id}</p>
-                            <span 
-                                className="priority-bubble" 
-                                style={{ backgroundColor: getPriorityColor(query.priority) }}
-                            >
-                                {query.priority}
-                            </span>
+                            {query.priority && query.priority !== 'None' && (
+                                <span 
+                                    className="priority-bubble" 
+                                    style={{ backgroundColor: getPriorityColor(query.priority) }}
+                                >
+                                    {query.priority}
+                                </span>
+                            )}
                         </div>
                         <p><strong>Query:</strong> {query.query}</p>
-                        <p><strong>Suggestion</strong> {query.querySolution}</p>
-                        
+                        <p><strong>Suggestion:</strong> {query.querySolution}</p>
                     </div>
-                    
                 ))}
             </div>
         </div>

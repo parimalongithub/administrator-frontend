@@ -10,7 +10,6 @@ const CustomerService = () => {
             .catch(error => console.error('Error fetching queries:', error));
     }, []);
 
-    // Function to determine the bubble color based on priority
     const getPriorityColor = (priority) => {
         switch (priority) {
             case 'High':
@@ -18,28 +17,31 @@ const CustomerService = () => {
             case 'Medium':
                 return 'orange';
             default:
-                return 'gray'; // Default color for other priorities
+                return 'grey';
         }
     };
+
+    const filteredQueries = queries.filter(query => query.priority && query.priority !== 'None');
 
     return (
         <div className="department-page">
             <h2>Customer Service Queries</h2>
             <div className="query-container">
-                {queries.map((query, index) => (
+                {filteredQueries.map((query, index) => (
                     <div key={index} className="query-box">
                         <div className="query-header">
                             <p><strong>ID:</strong> {query.id}</p>
-                            <span 
-                                className="priority-bubble" 
-                                style={{ backgroundColor: getPriorityColor(query.priority) }}
-                            >
-                                {query.priority}
-                            </span>
+                            {query.priority && (
+                                <span 
+                                    className="priority-bubble" 
+                                    style={{ backgroundColor: getPriorityColor(query.priority) }}
+                                >
+                                    {query.priority}
+                                </span>
+                            )}
                         </div>
                         <p><strong>Query:</strong> {query.query}</p>
-                        <p><strong>Suggestion</strong> {query.querySolution}</p>
-
+                        <p><strong>Suggestion:</strong> {query.querySolution}</p>
                     </div>
                 ))}
             </div>
