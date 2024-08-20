@@ -100,7 +100,7 @@ const BarChartAndPieChart = () => {
   useEffect(() => {
     const fetchPieChartData = async () => {
       try {
-        const response = await fetch('https://6a97e303-6c9f-4dbc-8fd9-caf7e8d8e50c.e1-us-east-azure.choreoapps.dev/departmentcount');
+        const response = await fetch('https://6a97e303-6c9f-4dbc-8fd9-caf7e8d8e50c.e1-us-east-azure.choreoapps.dev/statistics/departmentcount');
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
