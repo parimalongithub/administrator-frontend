@@ -4,6 +4,7 @@ import Technical from './Technical';
 import CustomerService from './Customerservice';
 import HR from './Hr';
 import Miscellaneous from './Miscellaneous';
+import Home from "./Home"
 import './css/style.css';
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
                     </ul>
                 </nav>
                 <Routes>
+
+                    <Route path="/" element={<Home />} />
                     <Route path="/technical" element={<Technical />} />
                     <Route path="/customerservice" element={<CustomerService />} />
                     <Route path="/hr" element={<HR />} />
