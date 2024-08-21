@@ -10,36 +10,38 @@ const Miscellaneous = () => {
             .catch(error => console.error('Error fetching queries:', error));
     }, []);
 
-    // Filter out queries with priority 'None'
-    const filteredQueries = queries.filter(query => query.priority && query.priority !== 'None');
-
     const getPriorityColor = (priority) => {
         switch (priority) {
             case 'High':
                 return 'red';
             case 'Medium':
                 return 'orange';
+            case 'None':
+                return 'silver'; // Color for 'None' priority
             default:
-                return 'gray'; // Default color for undefined or invalid priorities
+                return 'gray'; 
         }
     };
 
     return (
         <div className="department-page">
-            <h2>Miscellaneous Queries</h2>
+            <h2>Miscellaneous Department Queries</h2>
             <div className="query-container">
-                {filteredQueries.map((query, index) => (
+                {queries.map((query, index) => (
                     <div key={index} className="query-box">
-                        <p><strong>ID:</strong> {query.id}</p>
-                        <p><strong>Query:</strong> {query.text}</p>
-                        {query.priority && query.priority !== 'None' && (
-                            <span 
-                                className="priority-bubble" 
-                                style={{ backgroundColor: getPriorityColor(query.priority) }}
-                            >
-                                {query.priority}
-                            </span>
-                        )}
+                        <div className="query-header">
+                            <p><strong>ID:</strong> {query.id}</p>
+                            {query.priority && (
+                                <span 
+                                    className="priority-bubble" 
+                                    style={{ backgroundColor: getPriorityColor(query.priority) }}
+                                >
+                                    {query.priority}
+                                </span>
+                            )}
+                        </div>
+                        <p><strong>Query:</strong> {query.query}</p>
+                        <p><strong>Suggestion:</strong> {query.querySolution}</p>
                     </div>
                 ))}
             </div>

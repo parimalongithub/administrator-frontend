@@ -19,6 +19,9 @@ function App() {
                         <li><Link to="/hr">HR</Link></li>
                         <li><Link to="/miscellaneous">Miscellaneous</Link></li>
                     </ul>
+                    <ul>
+                        <li><Link to="/">Stats</Link></li>
+                    </ul>
                 </nav>
                 <Routes>
 
