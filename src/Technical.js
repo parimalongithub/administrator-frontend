@@ -40,7 +40,8 @@ const Technical = () => {
                                 </span>
                             )}
                         </div>
-                        <p><strong>Query:</strong> {query.query}</p>
+                        <p><strong>Date:</strong> {query.createdAt.split('T')[0]}</p>
+                        <h4><strong>Query:</strong> {query.query}</h4>
                         <p><strong>Suggestion:</strong> {query.querySolution}</p>
                     </div>
                 ))}

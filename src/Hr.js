@@ -40,9 +40,10 @@ const HR = () => {
                                 </span>
                             )}
                         </div>
-                        <p><strong>Query:</strong> {query.text}</p>
-                        {/* Assuming 'querySolution' is not part of the HR queries */}
-                        {/* <p><strong>Suggestion:</strong> {query.querySolution}</p> */}
+                        <p><strong>Date:</strong> {query.createdAt.split('T')[0]}</p>
+                        <h4><strong>Query:</strong> {query.query}</h4>
+                        <p><strong>Suggestion:</strong> {query.querySolution}</p>
+                
                     </div>
                 ))}
             </div>
