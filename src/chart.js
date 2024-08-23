@@ -14,7 +14,6 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
 
 const BarChartAndPieChart = () => {
-  // State for Bar Chart
   const [barChartData, setBarChartData] = useState({
     labels: ['Positive Feedback', 'Negative Feedback'],
     datasets: [
@@ -34,7 +33,6 @@ const BarChartAndPieChart = () => {
     ],
   });
 
-  // State for Pie Chart
   const [pieChartData, setPieChartData] = useState({
     labels: ['Technical', 'HR', 'Customer Service', 'Miscellaneous'],
     datasets: [
@@ -57,6 +55,12 @@ const BarChartAndPieChart = () => {
     ],
   });
 
+  const [positiveCount, setPositiveCount] = useState(0);
+  const [negativeCount, setNegativeCount] = useState(0);
+  const [departmentCounts, setDepartmentCounts] = useState([0, 0, 0, 0]);
+
+  const totalQueries = departmentCounts.reduce((acc, count) => acc + count, 0);
+
   // Fetch data for Bar Chart
   useEffect(() => {
     const fetchBarChartData = async () => {
@@ -67,15 +71,18 @@ const BarChartAndPieChart = () => {
         }
         const data = await response.json();
 
-        const positiveCount = data.positiveCount || 0;
-        const negativeCount = data.negativeCount || 0;
+        const positive = data.positiveCount || 0;
+        const negative = data.negativeCount || 0;
+
+        setPositiveCount(positive);
+        setNegativeCount(negative);
 
         setBarChartData({
           labels: ['Positive Feedback', 'Negative Feedback'],
           datasets: [
             {
               label: 'Customer Sentiment',
-              data: [positiveCount, negativeCount],
+              data: [positive, negative],
               backgroundColor: [
                 'rgba(54, 162, 235, 0.8)', // Blue for Positive
                 'rgba(255, 99, 132, 0.8)', // Red for Negative
@@ -106,18 +113,20 @@ const BarChartAndPieChart = () => {
         }
         const data = await response.json();
 
-        const departmentCounts = [
+        const departmentData = [
           data.technicalDepartmentCount || 0,
           data.hrDepartmentCount || 0,
           data.customerServiceDepartmentCount || 0,
           data.miscellaneousDepartmentCount || 0,
         ];
 
+        setDepartmentCounts(departmentData);
+
         setPieChartData({
           labels: ['Technical', 'HR', 'Customer Service', 'Miscellaneous'],
           datasets: [
             {
-              data: departmentCounts,
+              data: departmentData,
               backgroundColor: [
                 'rgba(54, 162, 235, 0.8)', // Blue for Technical
                 'rgba(255, 99, 132, 0.8)', // Red for HR
@@ -144,7 +153,8 @@ const BarChartAndPieChart = () => {
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', backgroundColor: '#333', borderRadius: '8px' }}>
-      <h2 style={{ textAlign: 'center', color: '#fff' }}>Statistics</h2>
+      <h1 style={{ textAlign: 'center', color: '#fff' }}>Statistics</h1>
+      <h3 style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold' }}>Total Number Of Queries: {totalQueries}</h3>
       <div style={{ display: 'flex', justifyContent: 'space-around', gap: '20px' }}>
         <div style={{ width: '45%' }}>
           <h3 style={{ textAlign: 'center', color: '#fff' }}>Customer Sentiment</h3>
@@ -178,14 +188,12 @@ const BarChartAndPieChart = () => {
                     color: '#fff', // White color for legend labels
                   },
                 },
-                title: {
-                  display: true,
-                  text: 'Customer Sentiment',
-                  color: '#fff', // White color for the title
-                },
               },
             }}
           />
+          <h4 style={{ textAlign: 'center', color: '#fff' }}>
+            Positive Feedback: {positiveCount} | Negative Feedback: {negativeCount}
+          </h4>
         </div>
         <div style={{ width: '45%' }}>
           <h3 style={{ textAlign: 'center', color: '#fff' }}>Department Queries Count</h3>
@@ -200,14 +208,12 @@ const BarChartAndPieChart = () => {
                     color: '#fff', // White color for legend labels
                   },
                 },
-                title: {
-                  display: true,
-                  text: 'Department Queries Count',
-                  color: '#fff', // White color for the title
-                },
               },
             }}
           />
+          <h4 style={{ textAlign: 'center', color: '#fff' }}>
+            Technical: {departmentCounts[0]} | HR: {departmentCounts[1]} | Customer Service: {departmentCounts[2]} | Miscellaneous: {departmentCounts[3]}
+          </h4>
         </div>
       </div>
     </div>

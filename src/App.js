@@ -13,6 +13,7 @@ function App() {
             <div className="App">
                 <h1>Administrator Dashboard</h1>
                 <nav>
+                    
                     <ul>
                         <li><Link to="/technical">Technical</Link></li>
                         <li><Link to="/customerservice">Customer Service</Link></li>
@@ -24,12 +25,12 @@ function App() {
                     </ul>
                 </nav>
                 <Routes>
-
                     <Route path="/" element={<Home />} />
                     <Route path="/technical" element={<Technical />} />
                     <Route path="/customerservice" element={<CustomerService />} />
                     <Route path="/hr" element={<HR />} />
                     <Route path="/miscellaneous" element={<Miscellaneous />} />
+
                 </Routes>
             </div>
         </Router>
@@ -37,3 +38,4 @@ function App() {
 }
 
 export default App;
+
